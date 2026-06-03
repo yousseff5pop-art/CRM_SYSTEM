@@ -16,11 +16,12 @@ export default function LoginPage() {
     setError("");
 
     try {
-      await fetchJson("/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json; charset=utf-8" },
-        body: JSON.stringify(form)
-      });
+  // استبدل السطر القديم بالسطر الجديد ده:
+await fetchJson("https://crm-system-backend-black.vercel.app/api/auth/login", {
+  method: "POST",
+  headers: { "Content-Type": "application/json; charset=utf-8" },
+  body: JSON.stringify(form)
+});
       await refreshUser();
       router.replace("/");
     } catch (err) {
