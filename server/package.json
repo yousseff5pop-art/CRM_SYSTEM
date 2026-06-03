@@ -2,9 +2,10 @@
   "name": "crm-server",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
+"scripts": {
     "dev": "node index.js",
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
