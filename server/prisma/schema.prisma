@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  displayName  String
+  passwordHash String
+  role         Role     @default(AGENT)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Contact {
+  id               String        @id @default(cuid())
+  identifier       String        @unique @default(cuid())
+  phone            String        @unique
+  name             String?
+  lastMessage      String?
+  messagesCount    Int           @default(0)
+  inboundCount     Int           @default(0)
+  stage            String?
+  interestStatus   String?
+  contacted        Boolean       @default(false)
+  contactDate      DateTime?
+  followUpAt       DateTime?
+  notes            String?       @db.Text
+  vip              Boolean       @default(false)
+  replyStatus      String        @default("no_reply")
+  whatsappTouched  Boolean       @default(false)
+  assignedEmployee String?
+  actionType       String        @default("none")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  messages         Message[]
+  units            ContactUnit[]
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  text      String   @db.Text
+  fromMe    Boolean  @default(false)
+  contactId String
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Unit {
+  id        String        @id @default(cuid())
+  title     String
+  status    String        @default("active")
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  contacts  ContactUnit[]
+}
+
+model ContactUnit {
+  contactId String
+  unitId    String
+  contact   Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  unit      Unit    @relation(fields: [unitId], references: [id], onDelete: Cascade)
+
+  @@id([contactId, unitId])
+}
+
+model Employee {
+  id        String   @id @default(cuid())
+  name      String
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model AdCampaign {
+  id        String   @id @default(cuid())
+  name      String
+  active    Boolean  @default(true)
+  startDate DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  AGENT
+}

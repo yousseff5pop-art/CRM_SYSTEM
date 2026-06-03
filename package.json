@@ -1,0 +1,8 @@
+{
+  "name": "whatsapp-crm-workspace",
+  "private": true,
+  "scripts": {
+    "start": "node start.js",
+    "dev": "node start.js"
+  }
+}
