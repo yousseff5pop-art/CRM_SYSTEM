@@ -2,7 +2,7 @@
   "name": "crm-server",
   "version": "1.0.0",
   "main": "index.js",
-"scripts": {
+  "scripts": {
     "dev": "node index.js",
     "start": "node index.js",
     "build": "prisma generate"
@@ -12,8 +12,6 @@
     "dotenv": "^16.0.0",
     "express": "^4.18.2",
     "mongoose": "^8.0.0",
-    "prisma": "^5.22.0",
-    "qrcode-terminal": "^0.12.0",
-    "whatsapp-web.js": "^1.34.6"
+    "prisma": "^5.22.0"
   }
 }
